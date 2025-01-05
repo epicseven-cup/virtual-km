@@ -13,11 +13,11 @@ import (
 )
 
 type VtubeStudio struct {
-	name          string
-	developer     string
-	icon          string
-	websocketAddr *url.URL
-	apiVersion    string
+	Name          string
+	Developer     string
+	Icon          string
+	WebsocketAddr *url.URL
+	ApiVersion    string
 	outgoing      chan message.Message
 
 	slogger *slog.Logger
@@ -79,13 +79,21 @@ func NewVtubeStudio(name, developer string, icon []byte, websocketAddr *url.URL,
 	}()
 
 	return &VtubeStudio{
-		name:          name,
-		developer:     developer,
-		icon:          encodedIcon,
-		websocketAddr: websocketAddr,
-		apiVersion:    apiVersion,
+		Name:          name,
+		Developer:     developer,
+		Icon:          encodedIcon,
+		WebsocketAddr: websocketAddr,
+		ApiVersion:    apiVersion,
 		outgoing:      outgoing,
 		slogger:       logger,
 		status:        status,
 	}, nil
+}
+
+func (v *VtubeStudio) SendMessage(messageType string, data message.Data) error {
+	msg := message.Message{
+		apiName: v.Name,
+		Data:    data,
+	}
+	return nil
 }
