@@ -1,0 +1,26 @@
+edition = "2023";
+
+package emotion;
+
+
+enum Emotion {
+  sadness = 0;
+  neutral = 1;
+  surprise = 2;
+  disgust = 3;
+  joy = 4;
+  fear = 5;
+}
+
+message EmotionMessage {
+  string text = 1;
+}
+
+message EvaluatedEmotionMessage {
+  string text = 1;
+  Emotion emotion = 2;
+}
+
+service EmotionServer {
+  rpc ClassifyEmotion(EmotionMessage) returns (EvaluatedEmotionMessage) {}
+}
